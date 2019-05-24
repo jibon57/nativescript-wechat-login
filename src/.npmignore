@@ -4,6 +4,7 @@
 !*.d.ts
 tsconfig.json
 scripts/*
+!scripts/postinstall.js
 platforms/android/*
 !platforms/android/include.gradle
 !platforms/android/*.aar
