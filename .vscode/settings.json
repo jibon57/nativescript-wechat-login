@@ -1,0 +1,16 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "hooks": true,
+        ".vscode": true,
+        "**/*.js": true,
+        "**/*.css": true,
+        "**/*.map": true
+    },
+    "editor.wordWrap": "on",
+    "editor.formatOnSave": true
+}
