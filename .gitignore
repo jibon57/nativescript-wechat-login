@@ -18,9 +18,11 @@ demo/*.d.ts
 !demo/references.d.ts
 demo/lib
 demo/platforms
+!demo/webpack.config.js
 node_modules
 publish/src
 publish/package
 demo/report/report.html
 demo/report/stats.json
 !demo-vue/app/app.js
+package-lock.json

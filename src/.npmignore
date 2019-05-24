@@ -1,5 +1,6 @@
 *.map
 *.ts
+!wxapi.WXEntryActivity.android.ts
 !*.d.ts
 tsconfig.json
 scripts/*

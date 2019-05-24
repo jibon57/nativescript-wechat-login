@@ -1,39 +1,96 @@
-# Your Plugin Name
+# NativeScript WeChat login plugin
 
-Add your plugin badges here. See [nativescript-urlhandler](https://github.com/hypery2k/nativescript-urlhandler) for example.
+[![npm](https://img.shields.io/npm/v/nativescript-wechat-login.svg)](https://www.npmjs.com/package/nativescript-wechat-login)
+[![npm](https://img.shields.io/npm/dt/nativescript-wechat-login.svg?label=npm%20downloads)](https://www.npmjs.com/package/nativescript-wechat-login)
+[![npm](https://img.shields.io/npm/dm/nativescript-wechat-login.svg)](https://www.npmjs.com/package/nativescript-wechat-login)
 
-Then describe what's the purpose of your plugin. 
+Using this plugin you will be able implement wechat login feature in your APP. You can read more details from [here](https://open.wechat.com/cgi-bin/newreadtemplate?t=overseas_open/docs/mobile/login/guide#login_guide) 
 
-In case you develop UI plugin, this is where you can add some screenshots.
-
-## (Optional) Prerequisites / Requirements
-
-Describe the prerequisites that the user need to have installed before using your plugin. See [nativescript-firebase plugin](https://github.com/eddyverbruggen/nativescript-plugin-firebase) for example.
 
 ## Installation
 
-Describe your plugin installation steps. Ideally it would be something like:
+```javascript
+tns plugin add nativescript-wechat-login
+```
+
+**Android**
+
+If installation was successful then `wxapi.WXEntryActivity.android.ts` file should be copied to your `app` directory with your APP ID. If it wasn't successfully copied then you will have to create that file manually. You can get code of that file from [here](https://raw.githubusercontent.com/jibon57/nativescript-wechat-login/master/src/wxapi.WXEntryActivity.android.ts). In this case you will require to change `YOUR_APP_ID` to your app's ID. 
+
+If you don't have `wxapi.WXEntryActivity.android.ts` file in your `app` directory then Android won't receive notification from wechat.
+
+**Webpack**
+
+You will have to add `wxapi.WXEntryActivity.android.ts` in your `webpack.config.js` file so that android runtime can generate appropriate java class. Check the demo `webpack.config.js` file. You can [read here](https://docs.nativescript.org/core-concepts/android-runtime/advanced-topics/extend-application-activity#extending-activity) for details.
 
 ```javascript
-tns plugin add <your-plugin-name>
+const appComponents = [
+    "tns-core-modules/ui/frame",
+    "tns-core-modules/ui/frame/activity",
+    resolve(__dirname, "src/app/wxapi.WXEntryActivity.android.ts")
+];
 ```
+
+**iOS**
+
+Open your `Info.plist` file from `App_Resources/iOS` location & add following lines
+
+```javascript
+<key>CFBundleURLTypes</key>
+<array>
+	<dict>
+		<key>CFBundleURLName</key>
+		<string>weixin</string>
+		<key>CFBundleURLSchemes</key>
+		<array>
+			<string>WECHAT_APP_ID</string>
+		</array>
+	</dict>
+</array>
+```
+Change `WECHAT_APP_ID` with your Wechat App ID. Check demo project `demo/App_Resources/iOS/Info.plist`
 
 ## Usage 
 
-Describe any usage specifics for your plugin. Give examples for Android, iOS, Angular if needed. See [nativescript-drop-down](https://www.npmjs.com/package/nativescript-drop-down) for example.
-	
-	```javascript
-    Usage code snippets here
-    ```)
+For details you can check the demo project.
 
-## API
+In your `main.ts` or `app.ts` need to import `initWechatSdk(WECHAT_APP_ID)` method with wechat app id.
 
-Describe your plugin methods and properties here. See [nativescript-feedback](https://github.com/EddyVerbruggen/nativescript-feedback) for example.
-    
-| Property | Default | Description |
-| --- | --- | --- |
-| some property | property default value | property description, default values, etc.. |
-| another property | property default value | property description, default values, etc.. |
+```javascript
+....
+import { initWechatSdk } from "nativescript-wechat-login";
+
+initWechatSdk("wxd930ea5d5a258f4f");
+```
+
+In any other page
+
+```javascript
+....
+import { WechatLogin } from "nativescript-wechat-login";
+import * as app from "tns-core-modules/application";
+```
+
+Now call in a method
+
+```javascript
+let wechat = new WechatLogin();
+
+if (wechat.isWechatInstalled()) {
+    wechat.doLogin("nativescript_demo");
+} else {
+    console.log("wechat isn't installed")
+}
+```
+
+You will get response from `wxApiResponse` event. So, you can register in that event like this:
+
+```javascript
+app.on('wxApiResponse', function(res){
+    console.dir(res) // you will get wechat notification here.
+}, this);
+```
+
     
 ## License
 

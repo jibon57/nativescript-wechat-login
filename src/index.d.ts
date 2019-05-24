@@ -1,6 +1,7 @@
-import { Common } from './wechat-login.common';
-export declare class WechatLogin extends Common {
-  // define your typings manually
-  // or..
-  // take the ios or android .d.ts files and copy/paste them here
+import { Observable } from 'tns-core-modules/data/observable';
+export declare function initWechatSdk(wechatAppId: any): void;
+export declare class WechatLogin extends Observable {
+  constructor();
+  doLogin(state?: string): boolean;
+  isWechatInstalled(): boolean;
 }

@@ -5,7 +5,5 @@ android {
 }
 
 dependencies {
-    // Describe plugin native Android dependencies like
-	// implementation "groupName:pluginName:ver" 
-    // EXAMPLE: implementation "com.facebook.fresco:fresco:0.9.0+"
+   implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
 }

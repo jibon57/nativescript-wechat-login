@@ -1,0 +1,1 @@
+module lWeChatSDK { explicit module lWeChatSDK { header "WXApi.h" header "WXApiObject.h" header "WechatAuthSDK.h" } }
