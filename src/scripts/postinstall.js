@@ -8,15 +8,12 @@ if (!appRoot) {
     return;
 }
 
-var copyPath = path.resolve(appRoot, "src/app"); // angular
 var mainPackage = JSON.parse(fs.readFileSync(path.resolve(appRoot, 'package.json'), 'utf8'));
+var nsconfig = JSON.parse(fs.readFileSync(path.resolve(appRoot, 'nsconfig.json'), 'utf8'));
+var copyPath = path.resolve(appRoot, nsconfig.appPath);
 var wxActivityFile = path.resolve(appRoot, "node_modules/nativescript-wechat-login/wxapi.WXEntryActivity.android.ts");
 
 console.log("appRoot", appRoot);
-
-if (!fs.existsSync(path.resolve(appRoot, "src"))) {
-    copyPath = path.resolve(appRoot, "app");
-}
 
 var wxActivityFileCopiedPath = path.resolve(copyPath, "wxapi.WXEntryActivity.android.ts");
 

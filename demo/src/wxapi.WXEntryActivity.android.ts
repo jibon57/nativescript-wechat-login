@@ -55,7 +55,7 @@ class WXEntryActivity extends android.support.v7.app.AppCompatActivity {
     public onResp(res) {
         console.log("onResp");
         setTimeout(() => {
-            app.notify(<AndroidActivityEventData>{
+            app.notify({
                 eventName: 'wxApiResponse',
                 object: res,
                 activity: this

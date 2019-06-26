@@ -20,7 +20,7 @@ module.exports = env => {
     const appComponents = [
         "tns-core-modules/ui/frame",
         "tns-core-modules/ui/frame/activity",
-        resolve(__dirname, "src/app/wxapi.WXEntryActivity.android.ts"),
+        resolve(__dirname, "src/wxapi.WXEntryActivity.android.ts"),
     ];
 
     const platform = env && (env.android && "android" || env.ios && "ios");

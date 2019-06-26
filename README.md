@@ -15,7 +15,7 @@ tns plugin add nativescript-wechat-login
 
 **Android**
 
-If installation was successful then `wxapi.WXEntryActivity.android.ts` file should be create to your `app` directory with your APP ID. If it wasn't successfully created then you will have to create that file manually. You can get code of that file from [here](https://github.com/jibon57/nativescript-wechat-login/blob/master/src/wxapi.WXEntryActivity.android.ts). In this case you will require to change `YOUR_APP_ID` to your app's ID. 
+If installation was successful then `wxapi.WXEntryActivity.android.ts` file should be create to your `src` or `app` (based on `nsconfig.json`) directory with your APP ID. If it wasn't successfully created then you will have to create that file manually. You can get code of that file from [here](https://github.com/jibon57/nativescript-wechat-login/blob/master/src/wxapi.WXEntryActivity.android.ts). In this case you will require to change `YOUR_APP_ID` to your app's ID. 
 
 If you don't have `wxapi.WXEntryActivity.android.ts` file in your `app` directory then Android won't receive notification from wechat.
 
@@ -27,7 +27,7 @@ You will have to add `wxapi.WXEntryActivity.android.ts` in your `webpack.config.
 const appComponents = [
     "tns-core-modules/ui/frame",
     "tns-core-modules/ui/frame/activity",
-    resolve(__dirname, "src/app/wxapi.WXEntryActivity.android.ts")
+    resolve(__dirname, "src/wxapi.WXEntryActivity.android.ts")
 ];
 ```
 
