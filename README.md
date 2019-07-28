@@ -7,10 +7,10 @@
 Using this plugin you will be able implement wechat login feature in your APP. You can read more details from [here](https://open.wechat.com/cgi-bin/newreadtemplate?t=overseas_open/docs/mobile/login/guide#login_guide) 
 
 
-## Installation
+## Installation for NativeScript 5.4.X
 
 ```javascript
-tns plugin add nativescript-wechat-login
+tns plugin add nativescript-wechat-login@1.0.2
 ```
 
 **Android**
