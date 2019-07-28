@@ -13,6 +13,9 @@ Using this plugin you will be able implement wechat login feature in your APP. Y
 tns plugin add nativescript-wechat-login
 ```
 
+If you are using NativeScript 5.4.X then you can have a look [this branch](https://github.com/jibon57/nativescript-wechat-login/tree/1.0.2)
+
+
 **Android**
 
 If installation was successful then `wxapi.WXEntryActivity.android.ts` file should be create to your `src` or `app` (based on `nsconfig.json`) directory with your APP ID. If it wasn't successfully created then you will have to create that file manually. You can get code of that file from [here](https://github.com/jibon57/nativescript-wechat-login/blob/master/src/wxapi.WXEntryActivity.android.ts). In this case you will require to change `YOUR_APP_ID` to your app's ID. 
@@ -27,7 +30,7 @@ You will have to add `wxapi.WXEntryActivity.android.ts` in your `webpack.config.
 const appComponents = [
     "tns-core-modules/ui/frame",
     "tns-core-modules/ui/frame/activity",
-    resolve(__dirname, "src/wxapi.WXEntryActivity.android.ts")
+    resolve(__dirname, "src/wxapi.WXEntryActivity.android.ts") // or resolve(__dirname, "app/wxapi.WXEntryActivity.android.ts") depends on nsconfig.json file's appPath value.
 ];
 ```
 
@@ -87,7 +90,8 @@ You will get response from `wxApiResponse` event. So, you can register in that e
 
 ```javascript
 app.on('wxApiResponse', function(res){
-    console.dir(res) // you will get wechat notification here.
+	console.dir(res) // you will get wechat notification here.
+	console.dir(res.object) // information from wechat
 }, this);
 ```
 
