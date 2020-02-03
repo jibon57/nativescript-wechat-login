@@ -1,6 +1,6 @@
 {
     "name": "nativescript-wechat-login",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Wechat Login plugin for nativescript.",
     "main": "wechat-login",
     "typings": "index.d.ts",

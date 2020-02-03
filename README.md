@@ -18,19 +18,50 @@ If you are using NativeScript 5.4.X then you can have a look [this branch](https
 
 **Android**
 
-If installation was successful then `wxapi.WXEntryActivity.android.ts` file should be create to your `src` or `app` (based on `nsconfig.json`) directory with your APP ID. If it wasn't successfully created then you will have to create that file manually. You can get code of that file from [here](https://github.com/jibon57/nativescript-wechat-login/blob/master/src/wxapi.WXEntryActivity.android.ts). In this case you will require to change `YOUR_APP_ID` to your app's ID. 
+If installation was successful then `wxapi.WXEntryActivity.android.ts` file should be create to your `src` or `app` (based on `nsconfig.json` or `webpack.config.js` `appPath` value) directory with your APP ID. If it wasn't successfully created then you will have to create that file manually. You can get code of that file from [here](https://github.com/jibon57/nativescript-wechat-login/blob/master/src/wxapi.WXEntryActivity.android.ts). In this case you will require to change `YOUR_APP_ID` to your app's ID. 
 
-If you don't have `wxapi.WXEntryActivity.android.ts` file in your `app` directory then Android won't receive notification from wechat.
+If you don't have `wxapi.WXEntryActivity.android.ts` file in your `src` or `app` directory then Android won't receive notification from wechat.
 
 **Webpack**
 
-You will have to add `wxapi.WXEntryActivity.android.ts` in your `webpack.config.js` file so that android runtime can generate appropriate java class. Check the demo `webpack.config.js` file. You can [read here](https://docs.nativescript.org/core-concepts/android-runtime/advanced-topics/extend-application-activity#extending-activity) for details.
+You will have to add `wxapi.WXEntryActivity.android.ts` in your `webpack.config.js` file so that android runtime can generate appropriate java class. Check the demo `custom-webpack.config.js` file. You can [read here](https://docs.nativescript.org/core-concepts/android-runtime/advanced-topics/extend-application-activity#extending-activity) for details.
+
+If you are using NativeScript version 6.4.0 or or newer then you can create custom `custom-webpack.config.js` file & add that file in your `nsconfig.json` file as below
+
+`custom-webpack.config.js`
+
+```javascript
+const webpackConfig = require("./webpack.config");
+const path = require("path");
+
+module.exports = env => {
+
+    env = env || {};
+
+    const cnf = webpackConfig(env);
+
+    env.appComponents = env.appComponents || [];
+    env.appComponents.push(path.resolve(cnf.context, "wxapi.WXEntryActivity.android.ts")); 
+
+    const config = webpackConfig(env);
+
+    return config;
+}
+```
+
+`nsconfig.json`
+```javascript
+	...
+	"webpackConfigPath": "./custom-webpack.config.js"
+```
+
+For NativeScript version 6.3.0 or older edit `webpack.config.js` manually.
 
 ```javascript
 const appComponents = [
     "tns-core-modules/ui/frame",
     "tns-core-modules/ui/frame/activity",
-    resolve(__dirname, "src/wxapi.WXEntryActivity.android.ts") // or resolve(__dirname, "app/wxapi.WXEntryActivity.android.ts") depends on nsconfig.json file's appPath value.
+    resolve(__dirname, "src/wxapi.WXEntryActivity.android.ts") // or resolve(__dirname, "app/wxapi.WXEntryActivity.android.ts") depends on nsconfig.json or webpack.config.js file's appPath value.
 ];
 ```
 
