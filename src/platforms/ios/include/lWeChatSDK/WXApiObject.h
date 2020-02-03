@@ -8,9 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-
-NS_ASSUME_NONNULL_BEGIN
-
 /*! @brief 错误码
  *
  */
@@ -45,7 +42,7 @@ enum WXAPISupport {
 /*! @brief 跳转profile类型
  *
  */
-enum WXBizProfileType {
+enum WXBizProfileType{
     WXBizProfileType_Normal = 0,    //**< 普通公众号  */
     WXBizProfileType_Device = 1,    //**< 硬件公众号  */
 };
@@ -53,7 +50,7 @@ enum WXBizProfileType {
 /*! @brief 分享小程序类型
  *
  */
-typedef NS_ENUM(NSUInteger, WXMiniProgramType) {
+typedef NS_ENUM(NSUInteger, WXMiniProgramType){
     WXMiniProgramTypeRelease = 0,       //**< 正式版  */
     WXMiniProgramTypeTest = 1,        //**< 开发版  */
     WXMiniProgramTypePreview = 2,         //**< 体验版  */
@@ -66,10 +63,35 @@ enum WXMPWebviewType {
     WXMPWebviewType_Ad = 0,        /**< 广告网页 **/
 };
 
+
+
+/*! @brief 应用支持接收微信的文件类型
+ *
+ */
+typedef NS_ENUM(UInt64, enAppSupportContentFlag)
+{
+    MMAPP_SUPPORT_NOCONTENT = 0x0,
+    MMAPP_SUPPORT_TEXT      = 0x1,
+    MMAPP_SUPPORT_PICTURE   = 0x2,
+    MMAPP_SUPPORT_LOCATION  = 0x4,
+    MMAPP_SUPPORT_VIDEO     = 0x8,
+    MMAPP_SUPPORT_AUDIO     = 0x10,
+    MMAPP_SUPPORT_WEBPAGE   = 0x20,
+    
+    // Suport File Type
+    MMAPP_SUPPORT_DOC  = 0x40,               // doc
+    MMAPP_SUPPORT_DOCX = 0x80,               // docx
+    MMAPP_SUPPORT_PPT  = 0x100,              // ppt
+    MMAPP_SUPPORT_PPTX = 0x200,              // pptx
+    MMAPP_SUPPORT_XLS  = 0x400,              // xls
+    MMAPP_SUPPORT_XLSX = 0x800,              // xlsx
+    MMAPP_SUPPORT_PDF  = 0x1000,             // pdf
+};
+
 /*! @brief log的级别
  *
  */
-typedef NS_ENUM(NSInteger,WXLogLevel) {
+typedef NS_ENUM(NSInteger,WXLogLevel){
     WXLogLevelNormal = 0,      // 打印日常的日志
     WXLogLevelDetail = 1,      // 打印详细的日志
 };
@@ -78,7 +100,7 @@ typedef NS_ENUM(NSInteger,WXLogLevel) {
 /*! @brief 打印回调的block
  *
  */
-typedef void(^WXLogBolock)(NSString *log);
+typedef void(^WXLogBolock)(NSString * log);
 
 #pragma mark - BaseReq
 /*! @brief 该类为微信终端SDK所有请求类的基类
@@ -88,8 +110,8 @@ typedef void(^WXLogBolock)(NSString *log);
 
 /** 请求类型 */
 @property (nonatomic, assign) int type;
-/** 由用户微信号和AppID组成的唯一标识，需要校验微信用户是否换号登录时填写*/
-@property (nonatomic, copy) NSString *openID;
+/** 由用户微信号和AppID组成的唯一标识，发送请求时第三方程序必须填写，用于校验微信用户是否换号登录*/
+@property (nonatomic, retain) NSString* openID;
 
 @end
 
@@ -103,7 +125,7 @@ typedef void(^WXLogBolock)(NSString *log);
 /** 错误码 */
 @property (nonatomic, assign) int errCode;
 /** 错误提示字符串 */
-@property (nonatomic, copy) NSString *errStr;
+@property (nonatomic, retain) NSString *errStr;
 /** 响应类型 */
 @property (nonatomic, assign) int type;
 
@@ -127,13 +149,14 @@ typedef void(^WXLogBolock)(NSString *log);
  * @see SendAuthResp
  * @note scope字符串长度不能超过1K
  */
-@property (nonatomic, copy) NSString *scope;
+@property (nonatomic, retain) NSString* scope;
 /** 第三方程序本身用来标识其请求的唯一性，最后跳转回第三方程序时，由微信终端回传。
  * @note state字符串长度不能超过1K
  */
-@property (nonatomic, copy) NSString *state;
-
+@property (nonatomic, retain) NSString* state;
 @end
+
+
 
 #pragma mark - SendAuthResp
 /*! @brief 微信处理完第三方程序的认证和权限申请后向第三方程序回送的处理结果。
@@ -143,13 +166,13 @@ typedef void(^WXLogBolock)(NSString *log);
  * @see onResp
  */
 @interface SendAuthResp : BaseResp
-@property (nonatomic, copy, nullable) NSString *code;
+@property (nonatomic, retain) NSString* code;
 /** 第三方程序发送时用来标识其请求的唯一性的标志，由第三方程序调用sendReq时传入，由微信终端回传
  * @note state字符串长度不能超过1K
  */
-@property (nonatomic, copy, nullable) NSString *state;
-@property (nonatomic, copy, nullable) NSString *lang;
-@property (nonatomic, copy, nullable) NSString *country;
+@property (nonatomic, retain) NSString* state;
+@property (nonatomic, retain) NSString* lang;
+@property (nonatomic, retain) NSString* country;
 @end
 
 
@@ -165,22 +188,22 @@ typedef void(^WXLogBolock)(NSString *log);
 /** 发送消息的文本内容
  * @note 文本长度必须大于0且小于10K
  */
-@property (nonatomic, copy) NSString *text;
+@property (nonatomic, retain) NSString* text;
 /** 发送消息的多媒体内容
  * @see WXMediaMessage
  */
-@property (nonatomic, strong) WXMediaMessage *message;
+@property (nonatomic, retain) WXMediaMessage* message;
 /** 发送消息的类型，包括文本消息和多媒体消息两种，两者只能选择其一，不能同时发送文本和多媒体消息 */
 @property (nonatomic, assign) BOOL bText;
 /** 发送的目标场景，可以选择发送到会话(WXSceneSession)或者朋友圈(WXSceneTimeline)。 默认发送到会话。
  * @see WXScene
  */
 @property (nonatomic, assign) int scene;
-/** 指定发送消息的人
- * @note WXSceneSpecifiedSession时有效
- */
-@property (nonatomic, copy, nullable) NSString *toUserOpenId;
+/** 指定发送消息的人，WXSceneSpecifiedSession时有效 */
+@property (nonatomic, retain) NSString* toUserOpenId;
 @end
+
+
 
 #pragma mark - SendMessageToWXResp
 /*! @brief 微信终端向第三方程序返回的SendMessageToWXReq处理结果。
@@ -188,9 +211,11 @@ typedef void(^WXLogBolock)(NSString *log);
  * 第三方程序向微信终端发送SendMessageToWXReq后，微信发送回来的处理结果，该结果用SendMessageToWXResp表示。
  */
 @interface SendMessageToWXResp : BaseResp
-@property(nonatomic, copy) NSString *lang;
-@property(nonatomic, copy) NSString *country;
+@property(nonatomic, retain) NSString* lang;
+@property(nonatomic, retain) NSString* country;
 @end
+
+
 
 #pragma mark - GetMessageFromWXReq
 /*! @brief 微信终端向第三方程序请求提供内容的消息结构体。
@@ -199,8 +224,8 @@ typedef void(^WXLogBolock)(NSString *log);
  * 需要第三方程序调用sendResp返回一个GetMessageFromWXResp消息结构体。
  */
 @interface GetMessageFromWXReq : BaseReq
-@property (nonatomic, strong) NSString *lang;
-@property (nonatomic, strong) NSString *country;
+@property (nonatomic, retain) NSString* lang;
+@property (nonatomic, retain) NSString* country;
 @end
 
 
@@ -214,11 +239,11 @@ typedef void(^WXLogBolock)(NSString *log);
 /** 向微信终端提供的文本内容
  @note 文本长度必须大于0且小于10K
  */
-@property (nonatomic, strong) NSString *text;
+@property (nonatomic, retain) NSString* text;
 /** 向微信终端提供的多媒体内容。
  * @see WXMediaMessage
  */
-@property (nonatomic, strong) WXMediaMessage *message;
+@property (nonatomic, retain) WXMediaMessage* message;
 /** 向微信终端提供内容的消息类型，包括文本消息和多媒体消息两种，两者只能选择其一，不能同时发送文本和多媒体消息 */
 @property (nonatomic, assign) BOOL bText;
 @end
@@ -235,9 +260,9 @@ typedef void(^WXLogBolock)(NSString *log);
 /** 微信终端向第三方程序发送的要求第三方程序处理的多媒体内容
  * @see WXMediaMessage
  */
-@property (nonatomic, strong) WXMediaMessage *message;
-@property (nonatomic, copy) NSString *lang;
-@property (nonatomic, copy) NSString *country;
+@property (nonatomic, retain) WXMediaMessage* message;
+@property (nonatomic, retain) NSString* lang;
+@property (nonatomic, retain) NSString* country;
 @end
 
 
@@ -252,17 +277,42 @@ typedef void(^WXLogBolock)(NSString *log);
 @end
 
 
+
 #pragma mark - LaunchFromWXReq
 /*! @brief 微信终端打开第三方程序携带的消息结构体
  *
  *  微信向第三方发送的结构体，第三方不需要返回
  */
 @interface LaunchFromWXReq : BaseReq
-@property (nonatomic, strong) WXMediaMessage *message;
-@property (nonatomic, copy) NSString *lang;
-@property (nonatomic, copy) NSString *country;
+@property (nonatomic, retain) WXMediaMessage* message;
+@property (nonatomic, retain) NSString* lang;
+@property (nonatomic, retain) NSString* country;
 @end
 
+#pragma mark - OpenTempSessionReq
+/* ! @brief 第三方通知微信，打开临时会话
+ *
+ * 第三方通知微信，打开临时会话
+ */
+@interface OpenTempSessionReq : BaseReq
+/** 需要打开的用户名
+ * @attention 长度不能超过512字节
+ */
+@property (nonatomic, retain) NSString* username;
+/** 开发者自定义参数，拉起临时会话后会发给开发者后台，可以用于识别场景
+ * @attention 长度不能超过32位
+ */
+@property (nonatomic, retain) NSString*  sessionFrom;
+@end
+
+#pragma mark - OpenTempSessionResp
+/*! @brief 微信终端向第三方程序返回的OpenTempSessionReq处理结果。
+ *
+ * 第三方程序向微信终端发送OpenTempSessionReq后，微信发送回来的处理结果，该结果用OpenTempSessionResp表示。
+ */
+@interface OpenTempSessionResp : BaseResp
+
+@end
 
 #pragma mark - OpenWebviewReq
 /* ! @brief 第三方通知微信启动内部浏览器，打开指定网页
@@ -273,7 +323,7 @@ typedef void(^WXLogBolock)(NSString *log);
 /** 需要打开的网页对应的Url
  * @attention 长度不能超过1024
  */
-@property(nonatomic, copy) NSString *url;
+@property(nonatomic,retain)NSString* url;
 
 @end
 
@@ -285,7 +335,6 @@ typedef void(^WXLogBolock)(NSString *log);
 @interface OpenWebviewResp : BaseResp
 
 @end
-
 
 
 #pragma mark - WXOpenBusinessWebViewReq
@@ -303,7 +352,7 @@ typedef void(^WXLogBolock)(NSString *log);
 /** 网页业务参数
  * @attention
  */
-@property (nonatomic, strong, nullable) NSDictionary *queryInfoDic;
+@property (nonatomic, retain) NSDictionary *queryInfoDic;
 
 @end
 
@@ -316,7 +365,7 @@ typedef void(^WXLogBolock)(NSString *log);
 /** 第三方程序自定义简单数据，微信终端会回传给第三方程序处理
  * @attention 长度不能超过2k
  */
-@property (nonatomic, copy) NSString *result;
+@property (nonatomic, retain) NSString *result;
 
 /** 网页业务类型
  * @attention
@@ -344,6 +393,48 @@ typedef void(^WXLogBolock)(NSString *log);
 
 @end
 
+#pragma mark - JumpToBizProfileReq
+/* ! @brief 第三方通知微信，打开指定微信号profile页面
+ *
+ * 第三方通知微信，打开指定微信号profile页面
+ */
+@interface JumpToBizProfileReq : BaseReq
+/** 跳转到该公众号的profile
+ * @attention 长度不能超过512字节
+ */
+@property (nonatomic, retain) NSString* username;
+/** 如果用户加了该公众号为好友，extMsg会上传到服务器
+ * @attention 长度不能超过1024字节
+ */
+@property (nonatomic, retain) NSString* extMsg;
+/**
+ * 跳转的公众号类型
+ * @see WXBizProfileType
+ */
+@property (nonatomic, assign) int profileType;
+@end
+
+
+
+#pragma mark - JumpToBizWebviewReq
+/* ! @brief 第三方通知微信，打开指定usrname的profile网页版
+ *
+ */
+@interface JumpToBizWebviewReq : BaseReq
+/** 跳转的网页类型，目前只支持广告页
+ * @see WXMPWebviewType
+ */
+@property(nonatomic, assign) int webType;
+/** 跳转到该公众号的profile网页版
+ * @attention 长度不能超过512字节
+ */
+@property(nonatomic, retain) NSString* tousrname;
+/** 如果用户加了该公众号为好友，extMsg会上传到服务器
+ * @attention 长度不能超过1024字节
+ */
+@property(nonatomic, retain) NSString* extMsg;
+
+@end
 
 #pragma mark - WXCardItem
 
@@ -351,23 +442,23 @@ typedef void(^WXLogBolock)(NSString *log);
 /** 卡id
  * @attention 长度不能超过1024字节
  */
-@property (nonatomic, copy) NSString *cardId;
+@property (nonatomic,retain) NSString* cardId;
 /** ext信息
  * @attention 长度不能超过2024字节
  */
-@property (nonatomic, copy, nullable) NSString *extMsg;
+@property (nonatomic,retain) NSString* extMsg;
 /**
  * @attention 卡的状态,req不需要填。resp:0为未添加，1为已添加。
  */
-@property (nonatomic, assign) UInt32 cardState;
+@property (nonatomic,assign) UInt32 cardState;
 /**
  * @attention req不需要填，chooseCard返回的。
  */
-@property (nonatomic, copy) NSString *encryptCode;
+@property (nonatomic,retain) NSString* encryptCode;
 /**
  * @attention req不需要填，chooseCard返回的。
  */
-@property (nonatomic, copy) NSString *appID;
+@property (nonatomic,retain) NSString* appID;
 @end;
 
 #pragma mark - WXInvoiceItem
@@ -376,23 +467,23 @@ typedef void(^WXLogBolock)(NSString *log);
 /** 卡id
  * @attention 长度不能超过1024字节
  */
-@property (nonatomic, copy) NSString *cardId;
+@property (nonatomic,retain) NSString* cardId;
 /** ext信息
  * @attention 长度不能超过2024字节
  */
-@property (nonatomic, copy, nullable) NSString *extMsg;
+@property (nonatomic,retain) NSString* extMsg;
 /**
  * @attention 卡的状态,req不需要填。resp:0为未添加，1为已添加。
  */
-@property (nonatomic, assign) UInt32 cardState;
+@property (nonatomic,assign) UInt32 cardState;
 /**
  * @attention req不需要填，chooseCard返回的。
  */
-@property (nonatomic, copy) NSString *encryptCode;
+@property (nonatomic,retain) NSString* encryptCode;
 /**
  * @attention req不需要填，chooseCard返回的。
  */
-@property (nonatomic, copy) NSString *appID;
+@property (nonatomic,retain) NSString* appID;
 
 @end
 
@@ -405,7 +496,7 @@ typedef void(^WXLogBolock)(NSString *log);
 /** 卡列表
  * @attention 个数不能超过40个 类型WXCardItem
  */
-@property (nonatomic, strong) NSArray *cardAry;
+@property (nonatomic,retain) NSArray* cardAry;
 
 @end
 
@@ -419,7 +510,7 @@ typedef void(^WXLogBolock)(NSString *log);
 /** 卡列表
  * @attention 个数不能超过40个 类型WXCardItem
  */
-@property (nonatomic, strong) NSArray *cardAry;
+@property (nonatomic,retain) NSArray* cardAry;
 @end
 
 #pragma mark - WXChooseCardReq
@@ -428,15 +519,15 @@ typedef void(^WXLogBolock)(NSString *log);
  */
 
 @interface WXChooseCardReq : BaseReq
-@property (nonatomic, copy) NSString *appID;
-@property (nonatomic, assign) UInt32 shopID;
-@property (nonatomic, assign) UInt32 canMultiSelect;
-@property (nonatomic, copy) NSString *cardType;
-@property (nonatomic, copy) NSString *cardTpID;
-@property (nonatomic, copy) NSString *signType;
-@property (nonatomic, copy) NSString *cardSign;
-@property (nonatomic, assign) UInt32 timeStamp;
-@property (nonatomic, copy) NSString *nonceStr;
+@property(nonatomic, strong) NSString *appID;
+@property(nonatomic, assign) UInt32 shopID;
+@property(nonatomic, assign) UInt32 canMultiSelect;
+@property(nonatomic, strong) NSString *cardType;
+@property(nonatomic, strong) NSString *cardTpID;
+@property(nonatomic, strong) NSString *signType;
+@property(nonatomic, strong) NSString *cardSign;
+@property(nonatomic, assign) UInt32 timeStamp;
+@property(nonatomic, strong) NSString *nonceStr;
 @end
 
 
@@ -446,7 +537,7 @@ typedef void(^WXLogBolock)(NSString *log);
  */
 
 @interface WXChooseCardResp : BaseResp
-@property (nonatomic, strong ) NSArray* cardAry;
+@property (nonatomic,retain) NSArray* cardAry;
 @end
 
 
@@ -455,12 +546,12 @@ typedef void(^WXLogBolock)(NSString *log);
  *
  */
 @interface WXChooseInvoiceReq : BaseReq
-@property (nonatomic, copy) NSString *appID;
+@property (nonatomic, strong) NSString *appID;
 @property (nonatomic, assign) UInt32 shopID;
-@property (nonatomic, copy) NSString *signType;
-@property (nonatomic, copy) NSString *cardSign;
+@property (nonatomic, strong) NSString *signType;
+@property (nonatomic, strong) NSString *cardSign;
 @property (nonatomic, assign) UInt32 timeStamp;
-@property (nonatomic, copy) NSString *nonceStr;
+@property (nonatomic, strong) NSString *nonceStr;
 @end
 
 #pragma mark - WXChooseInvoiceResp
@@ -474,42 +565,42 @@ typedef void(^WXLogBolock)(NSString *log);
 #pragma mark - WXSubscriptionReq
 @interface WXSubscribeMsgReq : BaseReq
 @property (nonatomic, assign) UInt32 scene;
-@property (nonatomic, copy) NSString *templateId;
-@property (nonatomic, copy, nullable) NSString *reserved;
+@property (nonatomic, strong) NSString * templateId;
+@property (nonatomic, strong) NSString * reserved;
 @end
 
 #pragma mark - WXSubscriptionReq
 @interface WXSubscribeMsgResp : BaseResp
 
-@property (nonatomic, copy) NSString *templateId;
+@property (nonatomic, strong) NSString *templateId;
 @property (nonatomic, assign) UInt32 scene;
-@property (nonatomic, copy) NSString *action;
-@property (nonatomic, copy) NSString *reserved;
-@property (nonatomic, copy, nullable) NSString *openId;
+@property (nonatomic, strong) NSString *action;
+@property (nonatomic, strong) NSString * reserved;
+@property (nonatomic, strong) NSString * openId;
 
 @end
 
 #pragma mark - WXSubscribeMiniProgramMsg
-/** ! @brief 第三方请求订阅小程序消息
+/** ! @brief 微信返回第三方请求选择发票结果
  *
  */
 @interface WXSubscribeMiniProgramMsgReq : BaseReq
-@property (nonatomic, copy) NSString *miniProgramAppid;
+@property (nonatomic, strong) NSString * miniProgramAppid;
 @end
 
 #pragma mark - WXSubscriptionReq
 @interface WXSubscribeMiniProgramMsgResp : BaseResp
 
-@property(nonatomic, copy) NSString *openId;   // 小程序openid
-@property(nonatomic, copy) NSString *unionId;  // unionId
-@property(nonatomic, copy) NSString *nickName; // 用户昵称
+@property(nonatomic, strong) NSString *openId;   // 小程序openid
+@property(nonatomic, strong) NSString *unionId;  // unionId
+@property(nonatomic, strong) NSString *nickName; // 用户昵称
 
 @end
 
 #pragma mark - WXinvoiceAuthInsertReq
 @interface WXInvoiceAuthInsertReq : BaseReq
 
-@property (nonatomic, copy) NSString *urlString;
+@property (nonatomic, strong) NSString *urlString;
 
 @end
 
@@ -517,9 +608,40 @@ typedef void(^WXLogBolock)(NSString *log);
 
 @interface WXInvoiceAuthInsertResp : BaseResp
 
-@property (nonatomic, copy) NSString *wxOrderId;
+@property (nonatomic, strong) NSString * wxOrderId;
 
 @end
+
+#pragma mark - WXNontaxPayReq
+@interface WXNontaxPayReq:BaseReq
+
+@property (nonatomic, strong) NSString *urlString;
+
+@end
+
+#pragma mark - WXNontaxPayResp
+@interface WXNontaxPayResp : BaseResp
+
+@property (nonatomic, strong) NSString *wxOrderId;
+
+@end
+
+#pragma mark - WXPayInsuranceReq
+@interface WXPayInsuranceReq : BaseReq
+
+@property (nonatomic, strong) NSString *urlString;
+
+@end
+
+#pragma mark - WXPayInsuranceResp
+@interface WXPayInsuranceResp : BaseResp
+
+@property (nonatomic, strong) NSString *wxOrderId;
+
+@end
+
+#pragma mark - WXMediaMessage
+
 
 #pragma mark - WXMediaMessage
 
@@ -529,40 +651,40 @@ typedef void(^WXLogBolock)(NSString *log);
  */
 @interface WXMediaMessage : NSObject
 
-+ (WXMediaMessage *)message;
++(WXMediaMessage *) message;
 
 /** 标题
  * @note 长度不能超过512字节
  */
-@property (nonatomic, copy) NSString *title;
+@property (nonatomic, retain) NSString *title;
 /** 描述内容
  * @note 长度不能超过1K
  */
-@property (nonatomic, copy) NSString *description;
+@property (nonatomic, retain) NSString *description;
 /** 缩略图数据
- * @note 大小不能超过64K
+ * @note 大小不能超过32K
  */
-@property (nonatomic, strong, nullable) NSData *thumbData;
+@property (nonatomic, retain) NSData   *thumbData;
 /**
  * @note 长度不能超过64字节
  */
-@property (nonatomic, copy, nullable) NSString *mediaTagName;
+@property (nonatomic, retain) NSString *mediaTagName;
 /**
  *
  */
-@property (nonatomic, copy, nullable) NSString *messageExt;
-@property (nonatomic, copy, nullable) NSString *messageAction;
+@property (nonatomic, retain) NSString *messageExt;
+@property (nonatomic, retain) NSString *messageAction;
 /**
  * 多媒体数据对象，可以为WXImageObject，WXMusicObject，WXVideoObject，WXWebpageObject等。
  */
-@property (nonatomic, strong) id mediaObject;
+@property (nonatomic, retain) id        mediaObject;
 
 /*! @brief 设置消息缩略图的方法
  *
  * @param image 缩略图
- * @note 大小不能超过64K
+ * @note 大小不能超过32K
  */
-- (void)setThumbImage:(UIImage *)image;
+- (void) setThumbImage:(UIImage *)image;
 
 @end
 
@@ -580,12 +702,12 @@ typedef void(^WXLogBolock)(NSString *log);
  *
  * @note 返回的WXImageObject对象是自动释放的
  */
-+ (WXImageObject *)object;
++(WXImageObject *) object;
 
 /** 图片真实数据内容
- * @note 大小不能超过25M
+ * @note 大小不能超过10M
  */
-@property (nonatomic, strong) NSData *imageData;
+@property (nonatomic, retain) NSData    *imageData;
 
 @end
 
@@ -602,35 +724,26 @@ typedef void(^WXLogBolock)(NSString *log);
  *
  * @note 返回的WXMusicObject对象是自动释放的
  */
-+ (WXMusicObject *)object;
++(WXMusicObject *) object;
 
 /** 音乐网页的url地址
  * @note 长度不能超过10K
  */
-@property (nonatomic, copy) NSString *musicUrl;
+@property (nonatomic, retain) NSString *musicUrl;
 /** 音乐lowband网页的url地址
  * @note 长度不能超过10K
  */
-@property (nonatomic, copy) NSString *musicLowBandUrl;
+@property (nonatomic, retain) NSString *musicLowBandUrl;
 /** 音乐数据url地址
  * @note 长度不能超过10K
  */
-@property (nonatomic, copy) NSString *musicDataUrl;
+@property (nonatomic, retain) NSString *musicDataUrl;
 
 /**音乐lowband数据url地址
  * @note 长度不能超过10K
  */
-@property (nonatomic, copy) NSString *musicLowBandDataUrl;
+@property (nonatomic, retain) NSString *musicLowBandDataUrl;
 
-/**音乐封面图Url
- * @note 长度不能超过10K
- */
-@property (nonatomic, copy) NSString *songAlbumUrl;
-
-/**歌词信息 LRC格式
- * @note 长度不能超过32K
- */
-@property (nonatomic, copy, nullable) NSString *songLyric;
 @end
 
 
@@ -647,16 +760,16 @@ typedef void(^WXLogBolock)(NSString *log);
  *
  * @note 返回的WXVideoObject对象是自动释放的
  */
-+ (WXVideoObject *)object;
++(WXVideoObject *) object;
 
 /** 视频网页的url地址
  * @note 长度不能超过10K
  */
-@property (nonatomic, copy) NSString *videoUrl;
+@property (nonatomic, retain) NSString *videoUrl;
 /** 视频lowband网页的url地址
  * @note 长度不能超过10K
  */
-@property (nonatomic, copy) NSString *videoLowBandUrl;
+@property (nonatomic, retain) NSString *videoLowBandUrl;
 
 @end
 
@@ -673,12 +786,12 @@ typedef void(^WXLogBolock)(NSString *log);
  *
  * @note 返回的WXWebpageObject对象是自动释放的
  */
-+ (WXWebpageObject *)object;
++(WXWebpageObject *) object;
 
 /** 网页的url地址
  * @note 不能为空且长度不能超过10K
  */
-@property (nonatomic, copy) NSString *webpageUrl;
+@property (nonatomic, retain) NSString *webpageUrl;
 
 @end
 
@@ -697,20 +810,20 @@ typedef void(^WXLogBolock)(NSString *log);
  *
  * @note 返回的WXAppExtendObject对象是自动释放的
  */
-+ (WXAppExtendObject *)object;
++(WXAppExtendObject *) object;
 
 /** 若第三方程序不存在，微信终端会打开该url所指的App下载地址
  * @note 长度不能超过10K
  */
-@property (nonatomic, copy) NSString *url;
+@property (nonatomic, retain) NSString *url;
 /** 第三方程序自定义简单数据，微信终端会回传给第三方程序处理
  * @note 长度不能超过2K
  */
-@property (nonatomic, copy, nullable) NSString *extInfo;
+@property (nonatomic, retain) NSString *extInfo;
 /** App文件数据，该数据发送给微信好友，微信好友需要点击后下载数据，微信终端会回传给第三方程序处理
  * @note 大小不能超过10M
  */
-@property (nonatomic, strong, nullable) NSData *fileData;
+@property (nonatomic, retain) NSData   *fileData;
 
 @end
 
@@ -728,12 +841,12 @@ typedef void(^WXLogBolock)(NSString *log);
  *
  * @note 返回的WXEmoticonObject对象是自动释放的
  */
-+ (WXEmoticonObject *)object;
++(WXEmoticonObject *) object;
 
 /** 表情真实数据内容
  * @note 大小不能超过10M
  */
-@property (nonatomic, strong) NSData *emoticonData;
+@property (nonatomic, retain) NSData    *emoticonData;
 
 @end
 
@@ -750,17 +863,17 @@ typedef void(^WXLogBolock)(NSString *log);
  *
  * @note 返回的WXFileObject对象是自动释放的
  */
-+ (WXFileObject *)object;
++(WXFileObject *) object;
 
 /** 文件后缀名
  * @note 长度不超过64字节
  */
-@property (nonatomic, copy) NSString *fileExtension;
+@property (nonatomic, retain) NSString  *fileExtension;
 
 /** 文件真实数据内容
  * @note 大小不能超过10M
  */
-@property (nonatomic, strong) NSData *fileData;
+@property (nonatomic, retain) NSData    *fileData;
 
 @end
 
@@ -777,7 +890,7 @@ typedef void(^WXLogBolock)(NSString *log);
  *
  * @note 返回的WXLocationObject对象是自动释放的
  */
-+ (WXLocationObject *)object;
++(WXLocationObject *) object;
 
 /** 地理位置信息
  * @note 经纬度
@@ -786,6 +899,57 @@ typedef void(^WXLogBolock)(NSString *log);
 @property (nonatomic, assign) double lat; //纬度
 
 @end
+
+@interface WXMiniProgramObject : NSObject
+
+/*! @brief WXMiniProgramObject对象
+ *
+ * @note 返回的WXMiniProgramObject对象是自动释放的
+ */
++(WXMiniProgramObject *) object;
+
+@property (nonatomic, strong) NSString *webpageUrl; //低版本网页链接
+
+@property (nonatomic, strong) NSString *userName;   //小程序username
+
+@property (nonatomic, strong) NSString *path;       //小程序页面的路径
+
+@property (nonatomic, strong) NSData *hdImageData;   // 小程序新版本的预览图 128k
+
+@property (nonatomic, assign) BOOL withShareTicket;   //是否使用带 shareTicket 的转发
+
+@property (nonatomic, assign) WXMiniProgramType miniProgramType;  // 分享小程序的版本（正式，开发，体验）
+
+@end
+
+#pragma mark - WXLaunchMiniProgramReq
+
+/*! @brief WXLaunchMiniProgramReq对象, 可实现通过sdk拉起微信小程序
+ *
+ * @note 返回的WXLaunchMiniProgramReq对象是自动释放的
+ */
+@interface WXLaunchMiniProgramReq : BaseReq
+
++(WXLaunchMiniProgramReq *) object;
+
+@property (nonatomic, strong) NSString *userName;   //拉起的小程序的username
+@property (nonatomic, strong) NSString *path;       //拉起小程序页面的路径，不填默认拉起小程序首页
+@property (nonatomic, assign) WXMiniProgramType miniProgramType; //拉起小程序的类型
+
+@property (nonatomic, strong) NSString *extMsg; //json格式
+@end
+
+#pragma mark - WXLaunchMiniProgramResp
+/*! @brief 微信终端向第三方程序返回的WXLaunchMiniProgramReq处理结果。
+ *
+ * 第三方程序向微信终端发送WXLaunchMiniProgramReq后，微信发送回来的处理结果，该结果用WXLaunchMiniProgramResp表示。
+ */
+@interface WXLaunchMiniProgramResp : BaseResp
+
+@property (nonatomic, retain) NSString *extMsg;
+
+@end
+
 
 #pragma mark - WXTextObject
 /*! @brief 多媒体消息中包含的文本数据对象
@@ -799,142 +963,11 @@ typedef void(^WXLogBolock)(NSString *log);
  *
  * @note 返回的WXTextObject对象是自动释放的
  */
-+ (WXTextObject *)object;
++(WXTextObject *) object;
 
 /** 地理位置信息
  * @note 文本内容
  */
-@property (nonatomic, copy) NSString *contentText;
+@property (nonatomic, retain) NSString *contentText;
 
 @end
-
-#pragma mark - WXMiniProgramObject
-
-@interface WXMiniProgramObject : NSObject
-
-/*! @brief WXMiniProgramObject对象
- *
- * @note 返回的WXMiniProgramObject对象是自动释放的
- */
-+ (WXMiniProgramObject *)object;
-
-/** 低版本网页链接
- * @attention 长度不能超过1024字节
- */
-@property (nonatomic, copy) NSString *webpageUrl;
-
-/** 小程序username */
-@property (nonatomic, copy) NSString *userName;
-
-/** 小程序页面的路径
- * @attention 不填默认拉起小程序首页
- */
-@property (nonatomic, copy, nullable) NSString *path;
-
-/** 小程序新版本的预览图
- * @attention 大小不能超过128k
- */
-@property (nonatomic, strong, nullable) NSData *hdImageData;
-
-/** 是否使用带 shareTicket 的转发 */
-@property (nonatomic, assign) BOOL withShareTicket;
-
-/** 分享小程序的版本
- * @attention （正式，开发，体验）
- */
-@property (nonatomic, assign) WXMiniProgramType miniProgramType;
-
-/** 是否禁用转发 */
-@property (nonatomic, assign) BOOL disableForward;
-
-@end
-
-#pragma mark - WXLaunchMiniProgramReq
-
-/*! @brief WXLaunchMiniProgramReq对象, 可实现通过sdk拉起微信小程序
- *
- * @note 返回的WXLaunchMiniProgramReq对象是自动释放的
- */
-@interface WXLaunchMiniProgramReq : BaseReq
-
-+ (WXLaunchMiniProgramReq *)object;
-
-/** 小程序username */
-@property (nonatomic, copy) NSString *userName;
-
-/** 小程序页面的路径
- * @attention 不填默认拉起小程序首页
- */
-@property (nonatomic, copy, nullable) NSString *path;
-
-/** 分享小程序的版本
- * @attention （正式，开发，体验）
- */
-@property (nonatomic, assign) WXMiniProgramType miniProgramType;
-
-/** ext信息
- * @attention json格式
- */
-@property (nonatomic, copy, nullable) NSString *extMsg;
-
-/** extDic
- * @attention 字典，可存放图片等比较大的数据
- */
-@property (nonatomic, copy, nullable) NSDictionary *extDic;
-
-@end
-
-#pragma mark - WXLaunchMiniProgramResp
-/*! @brief 微信终端向第三方程序返回的WXLaunchMiniProgramReq处理结果。
- *
- * 第三方程序向微信终端发送WXLaunchMiniProgramReq后，微信发送回来的处理结果，该结果用WXLaunchMiniProgramResp表示。
- */
-@interface WXLaunchMiniProgramResp : BaseResp
-
-@property (nonatomic, copy, nullable) NSString *extMsg;
-
-@end
-
-
-#pragma mark - WXOpenBusinessViewReq
-/*! @brief WXOpenBusinessViewReq对象, 可实现第三方通知微信启动，打开业务页面
- *
- * @note 返回的WXOpenBusinessViewReq对象是自动释放的
- */
-
-@interface WXOpenBusinessViewReq : BaseReq
-
-+ (WXOpenBusinessViewReq *)object;
-
-/** 业务类型
- */
-@property (nonatomic, copy) NSString *businessType;
-
-/** 业务参数
- */
-@property (nonatomic, copy, nullable) NSString *query;
-
-/** ext信息
- * @note 选填，json格式
- */
-@property (nonatomic, copy, nullable) NSString *extInfo;
-
-/** extData数据
- * @note
- */
-@property (nonatomic, strong, nullable) NSData *extData;
-@end
-
-
-@interface WXOpenBusinessViewResp : BaseResp
-
-/** 业务类型
- */
-@property (nonatomic, copy) NSString *businessType;
-
-/** 业务返回数据
- */
-@property (nonatomic, copy, nullable) NSString *extMsg;
-
-@end
-NS_ASSUME_NONNULL_END
