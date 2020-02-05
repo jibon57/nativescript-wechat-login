@@ -1,1 +1,1 @@
-OTHER_LDFLAGS = $(inherited) -framework "SystemConfiguration" -framework "Security" -framework "CoreTelephony" -framework "CFNetwork" -framework "UIKit" -framework "CoreGraphics" -l"z" -l"sqlite3.0" -l"c++"
+OTHER_LDFLAGS = $(inherited) -framework "WebKit" -framework "SystemConfiguration" -framework "Security" -framework "CoreTelephony" -framework "CFNetwork" -framework "UIKit" -framework "CoreGraphics" -l"z" -l"sqlite3.0"

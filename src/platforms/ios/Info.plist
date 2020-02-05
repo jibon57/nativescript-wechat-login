@@ -5,6 +5,7 @@
     <key>LSApplicationQueriesSchemes</key>
     <array>
         <string>weixin</string>
+        <string>weixinULAPI</string>
     </array>
 </dict>
 </plist>

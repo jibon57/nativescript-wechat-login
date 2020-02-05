@@ -33,18 +33,15 @@ export function setupAppDeligate(wechatAppId) {
     let appDelegate = getAppDelegate();
 
     enableMultipleOverridesFor(appDelegate, 'applicationDidFinishLaunchingWithOptions', function (application, launchOptions) {
-        console.log("applicationDidFinishLaunchingWithOptions");
-        WXApi.registerAppEnableMTA(wechatAppId, true);
+        WXApi.registerAppUniversalLink(wechatAppId, "https://help.wechat.com/sdksample/");
         return true;
     });
 
     enableMultipleOverridesFor(appDelegate, 'applicationHandleOpenURL', function (application, url) {
-        console.log("applicationHandleOpenURL");
         return WXApi.handleOpenURLDelegate(url, WXApiManagerDelegate.new())
     });
 
     enableMultipleOverridesFor(appDelegate, 'applicationOpenURLSourceApplicationAnnotation', function (application, url, sourceApplication, annotation) {
-        console.log("applicationOpenURLSourceApplicationAnnotation");
         try {
             return WXApi.handleOpenURLDelegate(url, WXApiManagerDelegate.new())
         } catch (e) {
@@ -64,14 +61,14 @@ class WXApiManagerDelegate extends NSObject {
     }
 
     public onReq(res) {
-        console.log("onReq")
+        //console.log("onReq")
     }
 
     /**
      * onResp
      */
     public onResp(res) {
-        console.log("BaseResp")
+        //console.log("BaseResp")
         setTimeout(() => {
             application.notify(<ApplicationEventData>{
                 eventName: 'wxApiResponse',
