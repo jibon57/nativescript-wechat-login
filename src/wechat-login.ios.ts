@@ -1,5 +1,4 @@
 import { Observable } from 'tns-core-modules/data/observable';
-import * as app from "tns-core-modules/application";
 
 const setupAppDeligate = require('./getappdelegate').setupAppDeligate;
 
@@ -25,7 +24,9 @@ export class WechatLogin extends Observable {
             req.state = state;
         }
 
-        WXApi.sendReq(req);
+        WXApi.sendReqCompletion(req, function (res) {
+            //console.log(res);
+        });
     }
 
     /**

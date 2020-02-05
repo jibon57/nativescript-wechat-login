@@ -80,32 +80,6 @@ declare class GetMessageFromWXResp extends BaseResp {
 	text: string;
 }
 
-declare class JumpToBizProfileReq extends BaseReq {
-
-	static alloc(): JumpToBizProfileReq; // inherited from NSObject
-
-	static new(): JumpToBizProfileReq; // inherited from NSObject
-
-	extMsg: string;
-
-	profileType: number;
-
-	username: string;
-}
-
-declare class JumpToBizWebviewReq extends BaseReq {
-
-	static alloc(): JumpToBizWebviewReq; // inherited from NSObject
-
-	static new(): JumpToBizWebviewReq; // inherited from NSObject
-
-	extMsg: string;
-
-	tousrname: string;
-
-	webType: number;
-}
-
 declare class LaunchFromWXReq extends BaseReq {
 
 	static alloc(): LaunchFromWXReq; // inherited from NSObject
@@ -133,24 +107,6 @@ declare class OpenRankListResp extends BaseResp {
 	static new(): OpenRankListResp; // inherited from NSObject
 }
 
-declare class OpenTempSessionReq extends BaseReq {
-
-	static alloc(): OpenTempSessionReq; // inherited from NSObject
-
-	static new(): OpenTempSessionReq; // inherited from NSObject
-
-	sessionFrom: string;
-
-	username: string;
-}
-
-declare class OpenTempSessionResp extends BaseResp {
-
-	static alloc(): OpenTempSessionResp; // inherited from NSObject
-
-	static new(): OpenTempSessionResp; // inherited from NSObject
-}
-
 declare class OpenWebviewReq extends BaseReq {
 
 	static alloc(): OpenWebviewReq; // inherited from NSObject
@@ -165,34 +121,6 @@ declare class OpenWebviewResp extends BaseResp {
 	static alloc(): OpenWebviewResp; // inherited from NSObject
 
 	static new(): OpenWebviewResp; // inherited from NSObject
-}
-
-declare class PayReq extends BaseReq {
-
-	static alloc(): PayReq; // inherited from NSObject
-
-	static new(): PayReq; // inherited from NSObject
-
-	nonceStr: string;
-
-	package: string;
-
-	partnerId: string;
-
-	prepayId: string;
-
-	sign: string;
-
-	timeStamp: number;
-}
-
-declare class PayResp extends BaseResp {
-
-	static alloc(): PayResp; // inherited from NSObject
-
-	static new(): PayResp; // inherited from NSObject
-
-	returnKey: string;
 }
 
 declare class SendAuthReq extends BaseReq {
@@ -284,6 +212,8 @@ declare class WXApi extends NSObject {
 
 	static handleOpenURLDelegate(url: NSURL, delegate: WXApiDelegate): boolean;
 
+	static handleOpenUniversalLinkDelegate(userActivity: NSUserActivity, delegate: WXApiDelegate): boolean;
+
 	static isWXAppInstalled(): boolean;
 
 	static isWXAppSupportApi(): boolean;
@@ -292,17 +222,13 @@ declare class WXApi extends NSObject {
 
 	static openWXApp(): boolean;
 
-	static registerApp(appid: string): boolean;
+	static registerAppUniversalLink(appid: string, universalLink: string): boolean;
 
-	static registerAppEnableMTA(appid: string, isEnableMTA: boolean): boolean;
+	static sendAuthReqViewControllerDelegateCompletion(req: SendAuthReq, viewController: UIViewController, delegate: WXApiDelegate, completion: (p1: boolean) => void): void;
 
-	static registerAppSupportContentFlag(typeFlag: number): void;
+	static sendReqCompletion(req: BaseReq, completion: (p1: boolean) => void): void;
 
-	static sendAuthReqViewControllerDelegate(req: SendAuthReq, viewController: UIViewController, delegate: WXApiDelegate): boolean;
-
-	static sendReq(req: BaseReq): boolean;
-
-	static sendResp(resp: BaseResp): boolean;
+	static sendRespCompletion(resp: BaseResp, completion: (p1: boolean) => void): void;
 
 	static startLogByLevelLogBlock(level: WXLogLevel, logBlock: (p1: string) => void): void;
 
@@ -525,6 +451,8 @@ declare class WXLaunchMiniProgramReq extends BaseReq {
 
 	static object(): WXLaunchMiniProgramReq;
 
+	extDic: NSDictionary<any, any>;
+
 	extMsg: string;
 
 	miniProgramType: WXMiniProgramType;
@@ -601,6 +529,8 @@ declare class WXMiniProgramObject extends NSObject {
 
 	static object(): WXMiniProgramObject;
 
+	disableForward: boolean;
+
 	hdImageData: NSData;
 
 	miniProgramType: WXMiniProgramType;
@@ -638,38 +568,38 @@ declare class WXMusicObject extends NSObject {
 	musicLowBandUrl: string;
 
 	musicUrl: string;
+
+	songAlbumUrl: string;
+
+	songLyric: string;
 }
 
-declare class WXNontaxPayReq extends BaseReq {
+declare class WXOpenBusinessViewReq extends BaseReq {
 
-	static alloc(): WXNontaxPayReq; // inherited from NSObject
+	static alloc(): WXOpenBusinessViewReq; // inherited from NSObject
 
-	static new(): WXNontaxPayReq; // inherited from NSObject
+	static new(): WXOpenBusinessViewReq; // inherited from NSObject
 
-	urlString: string;
+	static object(): WXOpenBusinessViewReq;
+
+	businessType: string;
+
+	extData: NSData;
+
+	extInfo: string;
+
+	query: string;
 }
 
-declare class WXNontaxPayResp extends BaseResp {
+declare class WXOpenBusinessViewResp extends BaseResp {
 
-	static alloc(): WXNontaxPayResp; // inherited from NSObject
+	static alloc(): WXOpenBusinessViewResp; // inherited from NSObject
 
-	static new(): WXNontaxPayResp; // inherited from NSObject
+	static new(): WXOpenBusinessViewResp; // inherited from NSObject
 
-	wxOrderId: string;
-}
+	businessType: string;
 
-declare class WXOfflinePayReq extends BaseReq {
-
-	static alloc(): WXOfflinePayReq; // inherited from NSObject
-
-	static new(): WXOfflinePayReq; // inherited from NSObject
-}
-
-declare class WXOfflinePayResp extends BaseResp {
-
-	static alloc(): WXOfflinePayResp; // inherited from NSObject
-
-	static new(): WXOfflinePayResp; // inherited from NSObject
+	extMsg: string;
 }
 
 declare class WXOpenBusinessWebViewReq extends BaseReq {
@@ -692,24 +622,6 @@ declare class WXOpenBusinessWebViewResp extends BaseResp {
 	businessType: number;
 
 	result: string;
-}
-
-declare class WXPayInsuranceReq extends BaseReq {
-
-	static alloc(): WXPayInsuranceReq; // inherited from NSObject
-
-	static new(): WXPayInsuranceReq; // inherited from NSObject
-
-	urlString: string;
-}
-
-declare class WXPayInsuranceResp extends BaseResp {
-
-	static alloc(): WXPayInsuranceResp; // inherited from NSObject
-
-	static new(): WXPayInsuranceResp; // inherited from NSObject
-
-	wxOrderId: string;
 }
 
 declare const enum WXScene {
@@ -836,35 +748,4 @@ declare class WechatAuthSDK extends NSObject {
 	AuthNonceStrTimeStampScopeSignatureSchemeData(appId: string, nonceStr: string, timeStamp: string, scope: string, signature: string, schemeData: string): boolean;
 
 	StopAuth(): boolean;
-}
-
-declare const enum enAppSupportContentFlag {
-
-	MMAPP_SUPPORT_NOCONTENT = 0,
-
-	MMAPP_SUPPORT_TEXT = 1,
-
-	MMAPP_SUPPORT_PICTURE = 2,
-
-	MMAPP_SUPPORT_LOCATION = 4,
-
-	MMAPP_SUPPORT_VIDEO = 8,
-
-	MMAPP_SUPPORT_AUDIO = 16,
-
-	MMAPP_SUPPORT_WEBPAGE = 32,
-
-	MMAPP_SUPPORT_DOC = 64,
-
-	MMAPP_SUPPORT_DOCX = 128,
-
-	MMAPP_SUPPORT_PPT = 256,
-
-	MMAPP_SUPPORT_PPTX = 512,
-
-	MMAPP_SUPPORT_XLS = 1024,
-
-	MMAPP_SUPPORT_XLSX = 2048,
-
-	MMAPP_SUPPORT_PDF = 4096
 }

@@ -26,7 +26,7 @@ If you don't have `wxapi.WXEntryActivity.android.ts` file in your `src` or `app`
 
 You will have to add `wxapi.WXEntryActivity.android.ts` in your `webpack.config.js` file so that android runtime can generate appropriate java class. Check the demo `custom-webpack.config.js` file. You can [read here](https://docs.nativescript.org/core-concepts/android-runtime/advanced-topics/extend-application-activity#extending-activity) for details.
 
-If you are using NativeScript version 6.4.0 or or newer then you can create custom `custom-webpack.config.js` file & add that file in your `nsconfig.json` file as below
+If you are using NativeScript version 6.4.0 or newer then you can create custom `custom-webpack.config.js` file & add that file in your `nsconfig.json` file as below
 
 `custom-webpack.config.js`
 
@@ -51,8 +51,8 @@ module.exports = env => {
 
 `nsconfig.json`
 ```javascript
-	...
-	"webpackConfigPath": "./custom-webpack.config.js"
+...
+"webpackConfigPath": "./custom-webpack.config.js"
 ```
 
 For NativeScript version 6.3.0 or older edit `webpack.config.js` manually.
