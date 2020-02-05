@@ -7,7 +7,6 @@
         "**/.DS_Store": true,
         "hooks": true,
         ".vscode": true,
-        "**/*.js": true,
         "**/*.css": true,
         "**/*.map": true
     },
