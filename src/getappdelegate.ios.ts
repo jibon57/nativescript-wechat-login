@@ -33,7 +33,7 @@ export function setupAppDeligate(wechatAppId) {
     let appDelegate = getAppDelegate();
 
     enableMultipleOverridesFor(appDelegate, 'applicationDidFinishLaunchingWithOptions', function (application, launchOptions) {
-        WXApi.registerAppUniversalLink(wechatAppId, "");
+        WXApi.registerAppUniversalLink(wechatAppId, "https://help.wechat.com/sdksample/");
         return true;
     });
 
