@@ -25,7 +25,7 @@ export class WechatLogin extends Observable {
         }
 
         WXApi.sendReqCompletion(req, function (res) {
-            //console.log(res);
+            return res;
         });
     }
 
