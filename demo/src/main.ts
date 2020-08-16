@@ -4,6 +4,6 @@ import { initWechatSdk } from "nativescript-wechat-login";
 
 import { AppModule } from "./app/app.module";
 
-initWechatSdk("wxd930ea5d5a258f4f");
+initWechatSdk("wxd930ea5d5a258f4f", "https://www.your.app.universal.link");
 
 platformNativeScriptDynamic().bootstrapModule(AppModule);

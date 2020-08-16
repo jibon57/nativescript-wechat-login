@@ -28,12 +28,12 @@ export function enableMultipleOverridesFor(classRef, methodName, nextImplementat
     };
 }
 
-export function setupAppDeligate(wechatAppId) {
+export function setupAppDeligate(wechatAppId, universalLink) {
 
     let appDelegate = getAppDelegate();
 
     enableMultipleOverridesFor(appDelegate, 'applicationDidFinishLaunchingWithOptions', function (application, launchOptions) {
-        WXApi.registerAppUniversalLink(wechatAppId, "https://help.wechat.com/sdksample/");
+        WXApi.registerAppUniversalLink(wechatAppId, universalLink);
         return true;
     });
 

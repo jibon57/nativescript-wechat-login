@@ -88,13 +88,13 @@ Change `WECHAT_APP_ID` with your Wechat App ID. Check demo project `demo/App_Res
 
 For details you can check the demo project.
 
-In your `main.ts` or `app.ts` need to import `initWechatSdk(WECHAT_APP_ID)` method with wechat app id.
+In your `main.ts` or `app.ts` need to import `initWechatSdk(WECHAT_APP_ID, UNIVERSAL_LINK)` method with wechat app id.
 
 ```javascript
 ....
 import { initWechatSdk } from "nativescript-wechat-login";
 
-initWechatSdk("wxd930ea5d5a258f4f");
+initWechatSdk("wxd930ea5d5a258f4f", "https://www.your.app.universal.link");
 ```
 
 In any other page
