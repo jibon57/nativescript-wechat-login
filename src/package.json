@@ -1,7 +1,7 @@
 {
     "name": "nativescript-wechat-login",
     "version": "1.0.6",
-    "description": "Wechat Login plugin for nativescript.",
+    "description": "Wechat Login plugin for nativescript. it is forked from https://github.com/jibon57/nativescript-wechat-login.git with fix for universal link",
     "main": "wechat-login",
     "typings": "index.d.ts",
     "nativescript": {
@@ -12,7 +12,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/jibon57/nativescript-wechat-login.git"
+        "url": "https://github.com/luffyzc/nativescript-wechat-login-1.git"
     },
     "scripts": {
         "tsc": "npm i && tsc",
@@ -40,14 +40,14 @@
         "wechat login nativescript"
     ],
     "author": {
-        "name": "Jibon L. Costa",
-        "email": "jiboncosta57@gmail.com"
+        "name": "Chi Zhang",
+        "email": "luffyzc1994@gmail.com"
     },
     "bugs": {
-        "url": "https://github.com/jibon57/nativescript-wechat-login/issues"
+        "url": "https://github.com/luffyzc/nativescript-wechat-login-1/issues"
     },
     "license": "Apache-2.0",
-    "homepage": "https://github.com/jibon57/nativescript-wechat-login",
+    "homepage": "https://github.com/luffyzc/nativescript-wechat-login-1",
     "readmeFilename": "README.md",
     "devDependencies": {
         "tns-core-modules": "^6.0.0",
